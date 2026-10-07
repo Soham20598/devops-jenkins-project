@@ -15,13 +15,15 @@ pipeline {
 
         stage("Install Dependencies") {
             steps {
-                sh "python3 -m pip install -r requirements.txt"
+                sh "rm -rf .venv"
+                sh "python3 -m venv .venv"
+                sh ".venv/bin/pip install --no-cache-dir -r requirements.txt"
             }
         }
 
         stage("Run Tests") {
             steps {
-                sh "python3 -m pytest -q"
+                sh ".venv/bin/python -m pytest -q"
             }
         }
 
